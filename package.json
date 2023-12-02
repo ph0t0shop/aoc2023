@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx tsc && node build/1"
+    "dev": "npx tsc && node build/1",
+    "dev2": "npx tsc && node build/2"
   },
   "author": "ph0t0shop",
   "license": "UNLICENSED",
