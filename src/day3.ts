@@ -1,5 +1,3 @@
-import { writeFile } from "fs/promises";
-
 export async function run(lines: string[]) {
     const lineLength = lines[0].length;
     const numberIDGrid: number[][] = [];
@@ -56,7 +54,7 @@ export async function run(lines: string[]) {
             for (let x = xStart; x < xStart + numStr.length; x++) {
                 numberIDGrid[y][x] = numberID;
             }
-            
+
             numberIDToValueMap[numberID] = numVal;
             numberID++;
 
