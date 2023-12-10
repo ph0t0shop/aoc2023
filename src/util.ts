@@ -8,3 +8,69 @@ export async function exists(filePath: string) {
         return false;
     }
 }
+
+interface Hashable {
+    toHashCode(): number;
+}
+
+export class Coordinate implements Hashable {
+    x: number;
+    y: number;
+
+    constructor(x: number, y: number) {
+        this.x = x;
+        this.y = y;
+    }
+
+    toHashCode(): number {
+        return (this.x + 10_000_000) << 24 | (this.y + 10_000_000);
+    }
+
+    plus(coord: Coordinate): Coordinate
+    plus(x: number, y: number): Coordinate;
+    plus(coord: Coordinate | number, y?: number): Coordinate {
+        if (y !== undefined) {
+            return new Coordinate(this.x + (coord as number), this.y + y);
+        } else {
+            return new Coordinate(this.x + (coord as Coordinate).x, this.y + (coord as Coordinate).y);
+        }
+    }
+
+    clone(): Coordinate {
+        return new Coordinate(this.x, this.y);
+    }
+
+    equals(coord: Coordinate): boolean {
+        return this.x === coord.x && this.y === coord.y;
+    }
+}
+
+export class HashSet<T extends Hashable> {
+    private set: Record<number, T> = {};
+
+    constructor(iterable?: Iterable<T> | null) {
+        if (iterable) {
+            for (const item of iterable) {
+                this.set[item.toHashCode()] = item;
+            }
+        }
+        
+        const testSet = new Set<T>();
+    }
+
+    add(item: T) {
+        this.set[item.toHashCode()] = item;
+    }
+
+    has(item: T): boolean {
+        return item.toHashCode() in this.set;
+    }
+
+    get size(): number {
+        return Object.keys(this.set).length;
+    }
+
+    [Symbol.iterator]() {
+        return Object.values(this.set).values();
+    }
+}
