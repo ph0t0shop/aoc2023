@@ -1,4 +1,3 @@
-import { writeFile } from "fs/promises";
 import { Coordinate, HashSet } from "./util.js";
 
 export async function run(lines: string[]) {
@@ -105,16 +104,6 @@ export async function run(lines: string[]) {
             }
         }
     }
-
-    let str: string[][] = lines.map(line => line.split("").map(item => "."));
-
-    for (const piece of path) {
-        str[piece.coord.y][piece.coord.x] = lines[piece.coord.y][piece.coord.x];
-    }
-
-    const resStr = str.map(line => line.join("")).join("\n");
-
-    await writeFile("out.txt", resStr);
 
     let prevCount = 0;
     let currCount = leftSet.size;
