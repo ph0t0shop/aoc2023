@@ -36,6 +36,10 @@ export class Coordinate implements Hashable {
         }
     }
 
+    manhattanDistanceTo(coord: Coordinate): number {
+        return Math.abs(this.x - coord.x) + Math.abs(this.y - coord.y);
+    }
+
     clone(): Coordinate {
         return new Coordinate(this.x, this.y);
     }
@@ -73,4 +77,15 @@ export class HashSet<T extends Hashable> {
     [Symbol.iterator]() {
         return Object.values(this.set).values();
     }
+}
+
+export function transpose(lines: string[]): string[] {
+    const flippedLines: string[] = [];
+    for (let x = 0; x < lines[0].length; x++) {
+        flippedLines.push("");
+        for (let y = 0; y < lines.length; y++) {
+            flippedLines[x] += lines[y][x];
+        }
+    }
+    return flippedLines;
 }
